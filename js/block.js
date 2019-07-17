@@ -1,18 +1,28 @@
 class Block {
-  constructor(x, y, width, velocity, ctx) {
+  constructor(x, y, width, mass, velocity, ctx) {
     this.x = x;
     this.y = y;
     this.w = width;
     this.v = velocity;
+    this.m = mass;
     this.ctx = ctx;
   }
 
-  collide(other) {
-    if(this.x + this.w < other.x || this.x > other.x + other.w){
-      console.log('Not collide');
-    } else {
-      console.log('Collide');
+  hitWall() {
+    if(this.x <= 0) {
+      this.v *= -1;
     }
+  }
+
+  collide(other) {
+    return !(this.x + this.w < other.x || this.x > other.x + other.w);
+  }
+
+  bounce(other) {
+    let sumM = this.m + other.m;
+    let newV = (this.m - other.m) / sumM * this.v;
+    newV += 2 * other.m / sumM * other.v;
+    return newV;
   }
 
   update() {
