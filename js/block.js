@@ -9,9 +9,11 @@ class Block {
   }
 
   hitWall() {
-    if(this.x <= 0) {
-      this.v *= -1;
-    }
+    return this.x <= 0;
+  }
+
+  reverse() {
+    this.v *= -1;
   }
 
   collide(other) {
