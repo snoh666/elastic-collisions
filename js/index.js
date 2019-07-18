@@ -4,7 +4,7 @@
   const bounceTextField = document.querySelector('p');
   let bounceCount = 0;
   let animationID;
-  const powerOf = 1;
+  const powerOf = 0;
   const block1 = new Block(100, 400, 10, 1, 0, ctx);
   const mass2 = Math.pow(100, powerOf);
   const block2 = new Block(200, 400, 40, mass2, -1, ctx);
@@ -44,14 +44,18 @@
     }
   };
 
-  document.addEventListener('keypress', e => {
-    switch(e.key) {
-      case 's':
-        draw();
-        break;
-      case 'p':
-        cancelAnimationFrame(animationID);
-        break;
+  document.querySelector('form').addEventListener('submit', e => {
+    e.preventDefault();
+
+    let numberToPower = document.querySelector('input').value;
+    numberToPower = parseInt(numberToPower);
+
+    block2.m = Math.pow(100, numberToPower);
+    if(typeof animationID !== "number") {
+      draw();
+    } else {
+      cancelAnimationFrame(animationID);
+      animationID = undefined;
     }
   });
 
